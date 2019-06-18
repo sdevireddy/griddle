@@ -1,0 +1,60 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+
+
+mainClassName = 'com.batch.mongo.csv.entity.config.MongoToCsv'
+
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.6.RELEASE")
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	providedRuntime
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+	compile "org.springframework.boot:spring-boot-dependencies:2.1.3.RELEASE"
+	compile "org.springframework.boot:spring-boot-starter-batch:2.1.3.RELEASE"
+	compile "org.springframework.batch:spring-batch-infrastructure:4.1.1.RELEASE"
+	compile "org.springframework.boot:spring-boot-starter-web:2.1.3.RELEASE"
+	compile "org.springframework.data:spring-data-mongodb:2.1.5.RELEASE"
+	compile "org.projectlombok:lombok:1.18.6"
+	compile "commons-lang:commons-lang:2.6"
+	compile "org.springframework.data:spring-data-mongodb:2.1.5.RELEASE"
+	compile "org.springframework.boot:spring-boot-starter-data-jpa:2.1.5.RELEASE"
+	compile "org.springframework.data:spring-data-commons:2.1.5.RELEASE"
+	compile "javax.validation:validation-api:2.0.1.Final"
+	
+	
+}
+
+jar {
+	baseName = 'csv-job'
+	version =  '0.1.0'
+	manifest {
+		attributes 'Implementation-Title': 'Gradle Jar File Example',
+		'Main-Class': 'com.batch.mongo.csv.entity.config.MongoToCsv'
+}
+from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+springBoot {
+	executable = true
+}
+
+
+
+
+
